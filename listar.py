@@ -1,6 +1,9 @@
 import requests
-import csv
 from bs4 import BeautifulSoup
+
+# https://www.trollandtoad.com/pokemon/scarlet-violet-base-set-singles/19467?Keywords=&min-price=&max-price=&items-pp=240&item-condition=&selected-cat=19467&sort-order=&page-no=1&view=list&subproduct=0&Rarity=&CardType=&minHitPoints=&maxHitPoints=
+
+# https://www.trollandtoad.com/pokemon/scarlet-violet-base-set-singles/19467?Keywords=&min-price=&max-price=&items-pp=240&item-condition=&selected-cat=19467&sort-order=&page-no=2&view=list&subproduct=0&Rarity=&CardType=&minHitPoints=&maxHitPoints=
 
 url = "https://www.trollandtoad.com/pokemon/scarlet-violet-base-set-singles/19467?Keywords=&min-price=&max-price=&items-pp=240&item-condition=&selected-cat=19467&sort-order=&page-no=1&view=list&subproduct=0&Rarity=&CardType=&minHitPoints=&maxHitPoints=" 
 
