@@ -1,5 +1,6 @@
 import requests
 import csv
+import os
 from bs4 import BeautifulSoup
 
 url = "https://www.trollandtoad.com/pokemon/scarlet-violet-base-set-singles/19467?Keywords=&min-price=&max-price=&items-pp=240&item-condition=&selected-cat=19467&sort-order=&page-no=1&view=list&subproduct=0&Rarity=&CardType=&minHitPoints=&maxHitPoints=" 
@@ -36,6 +37,21 @@ if response.status_code == 200:
         for price_index, price_div_tag in enumerate(price_div_tags, start=1):
             price_div_text = price_div_tag.text.strip() if price_div_tag else "Etiqueta <div> no encontrada"
             print(f"Precio {price_index}: {price_div_text}")
+
+            # Define el nombre del archivo
+            nombre_archivo = "salida.csv"
+
+            # Si el archivo ya existe, lo borra
+            if os.path.exists(nombre_archivo):
+                os.remove(nombre_archivo)
+
+            # Crea el archivo csv y añade algunas entradas
+            with open(nombre_archivo, mode='w', newline='') as file:
+                writer = csv.writer(file)
+                writer.writerow(["ID", "Nombre", "Edad"])
+                writer.writerow([1, "Juan", 23])
+                writer.writerow([2, "Ana", 28])
+
 
         print("--------------------")
     
