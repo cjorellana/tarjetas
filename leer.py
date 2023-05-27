@@ -8,7 +8,11 @@ url = "https://www.trollandtoad.com/pokemon/scarlet-violet-base-set-singles/1946
 response = requests.get(url)
 
 # Crea una lista vacía para almacenar los datos de las tarjetas
-cards_data = []
+data = []
+nombre = ""
+precio1 = 0.0
+precio2 = 0.0
+precio3 = 0.0
 
 
 # Define el nombre del archivo
@@ -20,7 +24,7 @@ if os.path.exists(nombre_archivo):
 # Abre el archivo una vez al principio para escribir el encabezado
 with open(nombre_archivo, mode='w', newline='') as file:
     writer = csv.writer(file)
-    writer.writerow(["Nombre"])  # Escribe el encabezado
+    writer.writerow(["Nombre","precio1"])  # Escribe el encabezado
 
 if response.status_code == 200:
     html_content = response.text
@@ -37,11 +41,13 @@ if response.status_code == 200:
 
 
 
-        print(f"Tarjeta {index}: {a_tag_text}")
+        #print(f"Tarjeta {index}: {a_tag_text}")
+        nombre = {a_tag_text}
 
-        with open(nombre_archivo, mode='a', newline='') as file:
-            writer = csv.writer(file)
-            writer.writerow({a_tag_text})  # Escribe el índice
+
+        #with open(nombre_archivo, mode='a', newline='') as file:
+        #    writer = csv.writer(file)
+        #    writer.writerow({a_tag_text})  # Escribe el índice
 
         # Encuentra todas las etiquetas <div> con la clase "col-2 text-center p-1" dentro del contenedor de tarjeta
         price_div_tags = card_container.find_all("div", class_="col-2 text-center p-1")
@@ -49,8 +55,22 @@ if response.status_code == 200:
         # Itera sobre las etiquetas <div> encontradas e imprime el texto contenido en ellas
         for price_index, price_div_tag in enumerate(price_div_tags, start=1):
             price_div_text = price_div_tag.text.strip() if price_div_tag else "Etiqueta <div> no encontrada"
-            print(f"Precio {price_index}: {price_div_text}")
 
+            texto= str({price_div_text})
+           
+            
+            
+
+            if texto.strip() == "{'Quantity'}":                            
+                continue
+            elif texto.strip() == "{'Price'}":
+                continue
+
+            #print(f"{nombre} {texto}")
+
+            #lse:
+            #print(f"Precio {price_index}: {price_div_text}")
+      
           
                     
                 
