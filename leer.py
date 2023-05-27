@@ -65,7 +65,11 @@ if response.status_code == 200:
                 continue
             elif texto.strip() == "{'Price'}":
                 continue
+            elif texto.strip() == "{''}":
+                continue
 
+
+            print(texto)
             #print(f"{nombre} {texto}")
 
             #lse:
