@@ -10,6 +10,18 @@ response = requests.get(url)
 # Crea una lista vacía para almacenar los datos de las tarjetas
 cards_data = []
 
+
+# Define el nombre del archivo
+nombre_archivo = "salida.csv"
+# Si el archivo ya existe, lo borra
+if os.path.exists(nombre_archivo):
+    os.remove(nombre_archivo)
+
+# Abre el archivo una vez al principio para escribir el encabezado
+with open(nombre_archivo, mode='w', newline='') as file:
+    writer = csv.writer(file)
+    writer.writerow(["Nombre"])  # Escribe el encabezado
+
 if response.status_code == 200:
     html_content = response.text
     # print(html_content)
@@ -23,12 +35,13 @@ if response.status_code == 200:
         a_tag = card_container.find("a", class_="card-text")
         a_tag_text = a_tag.text if a_tag else "Etiqueta <a> no encontrada"
 
-        
-
-
 
 
         print(f"Tarjeta {index}: {a_tag_text}")
+
+        with open(nombre_archivo, mode='a', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerow({a_tag_text})  # Escribe el índice
 
         # Encuentra todas las etiquetas <div> con la clase "col-2 text-center p-1" dentro del contenedor de tarjeta
         price_div_tags = card_container.find_all("div", class_="col-2 text-center p-1")
@@ -38,19 +51,9 @@ if response.status_code == 200:
             price_div_text = price_div_tag.text.strip() if price_div_tag else "Etiqueta <div> no encontrada"
             print(f"Precio {price_index}: {price_div_text}")
 
-            # Define el nombre del archivo
-            nombre_archivo = "salida.csv"
-
-            # Si el archivo ya existe, lo borra
-            if os.path.exists(nombre_archivo):
-                os.remove(nombre_archivo)
-
-            # Crea el archivo csv y añade algunas entradas
-            with open(nombre_archivo, mode='w', newline='') as file:
-                writer = csv.writer(file)
-                writer.writerow(["ID", "Nombre", "Edad"])
-                writer.writerow([1, "Juan", 23])
-                writer.writerow([2, "Ana", 28])
+          
+                    
+                
 
 
         print("--------------------")
