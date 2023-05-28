@@ -10,9 +10,7 @@ response = requests.get(url)
 # Crea una lista vacía para almacenar los datos de las tarjetas
 data = []
 nombre = ""
-precio1 = 0.0
-precio2 = 0.0
-precio3 = 0.0
+
 
 
 # Define el nombre del archivo
@@ -24,7 +22,7 @@ if os.path.exists(nombre_archivo):
 # Abre el archivo una vez al principio para escribir el encabezado
 with open(nombre_archivo, mode='w', newline='') as file:
     writer = csv.writer(file)
-    writer.writerow(["Nombre","precio1","precio2","precio3","precio4","precio5","precio6"])  # Escribe el encabezado
+    writer.writerow(["Nombre","precio1","precio2","precio3","precio4","precio5","precio6","precio7","precio8"])  # Escribe el encabezado
 
 if response.status_code == 200:
     html_content = response.text
@@ -43,7 +41,9 @@ if response.status_code == 200:
 
         #print(f"Tarjeta {index}: {a_tag_text}")
         nombre = {a_tag_text}
-        
+        nombre = str(nombre)
+        nombre = nombre.replace("{", "").replace("}", "").replace("'", "").replace('"', '')
+        precios = []
 
 
         #with open(nombre_archivo, mode='a', newline='') as file:
@@ -71,19 +71,36 @@ if response.status_code == 200:
             else:
                 texto = texto.replace("$", "").replace("'", "").replace("{", "").replace("}", "")  # Eliminamos los caracteres no numéricos
                 valor = float(texto)  # Convertimos la cadena a float
-                print(texto)
+                precios.append(valor)
+                
+                #print(texto)
                 #print(f"{nombre} {texto}")
 
             #lse:
             #print(f"Precio {price_index}: {price_div_text}")
-      
+        else:
+            #numeros_str = ', '.join(str(precio) for precio in precios)            
+            #print(precios)
+            
+            tmp=[]
+            tmp.append(nombre)
+            for x in precios:
+                tmp.append(x)
+            
+            #print(tmp)
+
+            # imprimimos
+            with open(nombre_archivo, mode='a', newline='') as file:
+                writer = csv.writer(file)
+                writer.writerow(tmp)  # Escribe el índice
+
           
                     
                 
 
 
-        print("--------------------")
-        break
+        #print("--------------------") # salto de linea
+        #break # para que solo corra una vez
     
     
 else:
