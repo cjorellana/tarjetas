@@ -24,7 +24,7 @@ if os.path.exists(nombre_archivo):
 # Abre el archivo una vez al principio para escribir el encabezado
 with open(nombre_archivo, mode='w', newline='') as file:
     writer = csv.writer(file)
-    writer.writerow(["Nombre","precio1"])  # Escribe el encabezado
+    writer.writerow(["Nombre","precio1","precio2","precio3","precio4","precio5","precio6"])  # Escribe el encabezado
 
 if response.status_code == 200:
     html_content = response.text
@@ -43,6 +43,7 @@ if response.status_code == 200:
 
         #print(f"Tarjeta {index}: {a_tag_text}")
         nombre = {a_tag_text}
+        
 
 
         #with open(nombre_archivo, mode='a', newline='') as file:
@@ -67,10 +68,11 @@ if response.status_code == 200:
                 continue
             elif texto.strip() == "{''}":
                 continue
-
-
-            print(texto)
-            #print(f"{nombre} {texto}")
+            else:
+                texto = texto.replace("$", "").replace("'", "").replace("{", "").replace("}", "")  # Eliminamos los caracteres no numéricos
+                valor = float(texto)  # Convertimos la cadena a float
+                print(texto)
+                #print(f"{nombre} {texto}")
 
             #lse:
             #print(f"Precio {price_index}: {price_div_text}")
@@ -81,6 +83,7 @@ if response.status_code == 200:
 
 
         print("--------------------")
+        break
     
     
 else:
